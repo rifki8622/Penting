@@ -1,0 +1,72 @@
+/* public/assets/style.css */
+body {
+  font-family: Arial, sans-serif;
+  background: #540606;
+  display: flex;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+.container {
+  background: rgb(110, 9, 9);
+  padding: 2rem;
+    min-height: 100vh;
+  padding-top: 40px;     /* ✅ Biar agak turun dari atas */
+  padding-bottom: 200px; /* ✅ Biar bawah bisa swipe panjang */
+  box-sizing: border-box;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+   padding: 60px 20px;
+}
+input {
+  display: block;
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #fcc3c3;
+}
+button {
+  width: 100%;
+  padding: 0.7rem;
+  background-color: #3a495a;
+  color: rgb(235, 118, 122);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.card {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #bc7878;
+  border-radius: 10px;
+  background-color: #cf4e4e;
+}
+.card h3 {
+  margin-top: 0;
+}
+.card button {
+  margin: 0.3rem 0.2rem;
+}
+.card.danger {
+  background-color: #ffeaea;
+  border-color: #ff4d4d;
+}
+/* Tambahkan ke style.css */
+.footer {
+  text-align: center;
+  padding: 15px;
+  background-color: #f0f0f0;
+  color: #555;
+  font-size: 14px;
+  position: relative;
+  margin-top: 50px;
+}
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+

@@ -1,0 +1,17 @@
+[
+  {
+    "username": "ripki",
+    "password": "rahasia123",
+    "role": "owner"
+  },
+  {
+    "username": "1",
+    "password": "1",
+    "role": "owner"
+  },
+  {
+    "username": "user1",
+    "password": "userpass",
+    "role": "user"
+  }
+]

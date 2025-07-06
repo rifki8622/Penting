@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Admin</title>
+  <link rel="stylesheet" href="assets/style.css" />
+<style>
+  body {
+    margin: 0;
+  }
+
+  .container {
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 200px;
+    box-sizing: border-box;
+  }
+
+  #notif {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: top 0.5s;
+    z-index: 9999;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+  }
+</style>
+
+</head>
+<body>
+  <div class="container">
+    <h2>Selamat Datang, Admin!</h2>
+
+    <div class="card">
+      <h3>Manajemen Akun</h3>
+      <button onclick="location.href='#'">➕ Tambah User</button>
+    </div>
+
+    <div class="card">
+  <h3>🧨 Kirim Serangan</h3>
+  <input type="text" id="targetNumber" placeholder="628xxxxxxx" required />
+  <button onclick="kirimAttack('bulldozer')">𝕯𝕰𝕬𝖀𝕿𝕮𝕳𝕰𝕽 DELAy ☠🔥</button>
+  <button onclick="kirimAttack('vampire')">𝓓𝓔𝓐𝓤𝓣𝓒𝓗𝓔𝓡 𝕱𝕮☠🔥☠🔥☠🔥</button>
+</div>
+<script>
+  async function kirimAttack(type) {
+    const target = document.getElementById('targetNumber').value;
+    if (!target) return alert('Isi nomor dulu ya!');
+
+    const res = await fetch('/send-attack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ target, type })
+    });
+
+    const data = await res.json();
+    showNotif(data.message, res.ok ? '#28a745' : '#dc3545');
+  }
+</script>
+
+
+
+    <div class="card">
+      <h3>Kirim ERROR ke Owner</h3>
+      <input type="text" id="commandInput" placeholder="Contoh: min errorr.." />
+      <button onclick="sendCommand()">🚀 Kirim Command</button>
+    </div>
+
+    <div class="card">
+      <h3>Status</h3>
+      <p>Server WhatsApp: <span id="botStatus">🔄 Loading...</span></p>
+    </div>
+
+    
+
+    <div class="card danger">
+      <button onclick="logout()">🚪 Logout</button>
+    </div>
+  </div>
+
+  <script>
+    function sendCommand() {
+      const cmd = document.getElementById('commandInput').value;
+      if (!cmd) return alert('Isi perintah dulu');
+      fetch('/send-command', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      }).then(res => res.json())
+        .then(data => alert(data.message));
+    }
+
+    function logout() {
+      window.location.href = '/logout';
+    }
+
+    document.getElementById('botStatus').innerText = '✅ Aktif';
+  </script>
+</body>
+</html>
+<footer class="footer">
+    <p>🔧 Dibuat oleh <b>ATZz Team</b> • Powered by Baileys & Express.js</p>
+  </footer>
+</body>
+</html>

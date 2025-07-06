@@ -1,0 +1,7 @@
+{
+  "botSessionId": "atzz-bot-session",
+  "botBridgeMethod": "file",         
+  "adminNumber": "6281234567890",
+  "panelApiUrl": "http://localhost:4000",
+  "limitResetHour": 0                  
+}

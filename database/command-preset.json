@@ -1,0 +1,17 @@
+[
+  {
+    "label": "🔘 Ping Bot",
+    "command": ".ping",
+    "access": ["owner", "admin", "user"]
+  },
+  {
+    "label": "💻 Buat Panel 1GB",
+    "command": ".1gb",
+    "access": ["owner", "admin", "user"]
+  },
+  {
+    "label": "⚙️ Restart Bot",
+    "command": ".restartbot",
+    "access": ["owner"]
+  }
+]

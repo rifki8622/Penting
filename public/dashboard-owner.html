@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dashboard Owner</title>
+  <link rel="stylesheet" href="assets/style.css" />
+ <style>
+  body {
+    margin: 0;
+  }
+
+  .container {
+    min-height: 100vh;
+    padding-top: 40px;
+    padding-bottom: 200px;
+    box-sizing: border-box;
+  }
+
+  #notif {
+    position: fixed;
+    top: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: top 0.5s;
+    z-index: 9999;
+  }
+
+  textarea {
+    width: 100%;
+    min-height: 80px;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-top: 5px;
+  }
+</style>
+
+</head>
+<body>
+
+  <div class="container">
+    <h2>Selamat Datang, Owner!</h2>
+
+    <!-- Semua Akun -->
+    <div class="card">
+      
+
+      <h3>📋 Semua Akun</h3>
+      <table id="akunTable" border="1" style="width: 100%; text-align: left;">
+        <thead>
+          <tr>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Aksi</th>
+          </tr>
+        </thead>
+        <tbody id="akunBody">
+          <tr><td colspan="3">🔄 Memuat data...</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Kirim ERROR ke Admin -->
+    <div class="card">
+      <h3>🚨 Kirim ERROR ke Admin</h3>
+      <input type="text" id="commandInput" placeholder="Contoh: Min error nih.." />
+      <button onclick="sendCommand()">🔥 Kirim Pesan</button>
+    </div>
+
+    <!-- Kirim BUG ke Target -->
+    <div class="card">
+  <h3>🧨 Kirim Serangan</h3>
+  <input type="text" id="targetNumber" placeholder="628xxxxxxx" required />
+  <button onclick="kirimAttack('bulldozer')">𝕯𝕰𝕬𝖀𝕿𝕮𝕳𝕰𝕽 DELAy ☠🔥</button>
+  <button onclick="kirimAttack('vampire')">𝓓𝓔𝓐𝓤𝓣𝓒𝓗𝓔𝓡 𝕱𝕮☠🔥☠🔥☠🔥</button>
+  <button onclick="kirimAttack('extreme')">𝕯𝕰𝕬𝖀𝕿𝕮𝕳𝕰𝕽 𝓥𝓪𝓶𝓹𝓲𝓻𝓮 ☠🔥☠🔥☠🔥</button>
+</div>
+<script>
+  async function kirimAttack(type) {
+    const target = document.getElementById('targetNumber').value;
+    if (!target) return alert('Isi nomor dulu ya!');
+
+    const res = await fetch('/send-attack', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ target, type })
+    });
+
+    const data = await res.json();
+    showNotif(data.message, res.ok ? '#28a745' : '#dc3545');
+  }
+</script>
+
+
+    <!-- Kirim Pengumuman -->
+    <div class="card">
+      <h3>📢 Kirim Pengumuman ke Semua Admin & User</h3>
+      <form id="form-pengumuman">
+        <textarea id="isiPengumuman" placeholder="Tulis isi pengumuman di sini..." required></textarea>
+        <button type="submit">📣 Kirim Pengumuman</button>
+      </form>
+    </div>
+
+    <!-- Status Bot -->
+    <div class="card">
+      <h3>Status</h3>
+      <p>Server WhatsApp: <span id="botStatus">✅ Aktif</span></p>
+    </div>
+
+    <!-- Logout -->
+    <div class="card danger">
+      <button onclick="logout()">🚪 Keluar</button>
+    </div>
+  </div>
+
+  <!-- Notifikasi -->
+  <div id="notif">Pesan berhasil!</div>
+
+  <script>
+    // ✅ Tampilkan Notifikasi
+    function showNotif(pesan, warna = '#28a745') {
+      const notif = document.getElementById('notif');
+      notif.innerText = pesan;
+      notif.style.backgroundColor = warna;
+      notif.style.top = '30px';
+      notif.style.display = 'block';
+      setTimeout(() => {
+        notif.style.top = '-100px';
+      }, 3000);
+    }
+
+    // 🚀 Kirim Pesan ke Admin
+    function sendCommand() {
+      const cmd = document.getElementById('commandInput').value;
+      if (!cmd) return alert('Isi perintah dulu');
+      fetch('/send-command', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command: cmd })
+      })
+      .then(res => res.json().then(data => ({ data, ok: res.ok })))
+      .then(({ data, ok }) => {
+        showNotif(data.message, ok ? '#28a745' : '#dc3545');
+      });
+    }
+
+    // 📤 Kirim Pesan Manual
+    document.getElementById('form-kirim-wa').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const to = document.getElementById('nomorTujuan').value;
+      const message = document.getElementById('isiPesan').value;
+
+      const res = await fetch('/send-wa', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ to, message })
+      });
+
+      const data = await res.json();
+      document.getElementById('hasilKirimWA').innerText = data.message;
+      document.getElementById('hasilKirimWA').style.color = res.ok ? 'green' : 'red';
+      showNotif(data.message, res.ok ? '#28a745' : '#dc3545');
+    });
+
+    // 📢 Kirim Pengumuman ke Semua Admin & User
+    document.getElementById('form-pengumuman').addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const message = document.getElementById('isiPengumuman').value;
+
+      const res = await fetch('/kirim-pengumuman', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message })
+      });
+
+      const data = await res.json();
+      showNotif(data.message, res.ok ? '#28a745' : '#dc3545');
+    });
+
+    // 🔐 Logout
+    function logout() {
+      window.location.href = '/logout';
+    }
+
+    // 📥 Load Daftar Akun
+    async function loadAkunList() {
+      const tbody = document.getElementById('akunBody');
+      tbody.innerHTML = '<tr><td colspan="3">🔄 Memuat data...</td></tr>';
+
+      try {
+        const res = await fetch('/list-akun');
+        const data = await res.json();
+        if (!data.success) throw new Error(data.message);
+
+        tbody.innerHTML = '';
+        data.users.forEach(user => {
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td>${user.username}</td>
+            <td>${user.role}</td>
+            <td>
+              <button onclick="hapusAkun('${user.username}')">🗑 Hapus</button>
+            </td>
+          `;
+          tbody.appendChild(row);
+        });
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="3" style="color:red;">❌ Gagal ambil data</td></tr>`;
+      }
+    }
+
+    // 🗑 Hapus Akun
+    async function hapusAkun(username) {
+      if (!confirm(`Yakin ingin menghapus ${username}?`)) return;
+
+      const res = await fetch('/hapus-akun', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username })
+      });
+
+      const data = await res.json();
+      showNotif(data.message, res.ok ? '#28a745' : '#dc3545');
+      loadAkunList();
+    }
+
+    // ⏳ Load saat buka halaman
+    loadAkunList();
+  </script>
+</body>
+</html>
+<footer class="footer">
+    <p>🔧 Dibuat oleh <b>ATZz Team</b> • Powered by Baileys & Express.js</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,14 @@
+{
+  "user": {
+    ".1gb": {
+      "maxPerDay": 1,
+      "usedToday": 0,
+      "lastUsed": "2025-07-05"
+    },
+    ".ping": {
+      "maxPerDay": 5,
+      "usedToday": 2,
+      "lastUsed": "2025-07-05"
+    }
+  }
+}

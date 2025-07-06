@@ -1,0 +1,12 @@
+[
+  {
+    "username": "user1",
+    "command": ".1gb",
+    "datetime": "2025-07-05T11:45:00"
+  },
+  {
+    "username": "adminku",
+    "command": ".ping",
+    "datetime": "2025-07-05T12:01:00"
+  }
+]
